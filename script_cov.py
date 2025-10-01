@@ -1,4 +1,7 @@
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import math
 
 # leggi il CSV
 data = pd.read_csv("unico.csv")
@@ -6,28 +9,34 @@ data = pd.read_csv("unico.csv")
 # seleziona solo variabili numeriche
 num_data = data.select_dtypes(include=['float64', 'int64'])
 
-# matrice di correlazione
+# calcola la matrice di correlazione
 cor_matrix = num_data.corr()
 
-# soglia per considerare "forte" una correlazione
-threshold = 0.7
+# quante variabili per immagine (puoi cambiare il numero)
+vars_per_plot = 10  
 
-# lista per salvare i risultati
-strong_corrs = []
+# numero totale di variabili
+cols = cor_matrix.columns
+n_vars = len(cols)
 
-for col1 in cor_matrix.columns:
-    for col2 in cor_matrix.columns:
-        if col1 < col2:  # evita duplicati e auto-correlazioni
-            value = cor_matrix.loc[col1, col2]
-            if abs(value) >= threshold:
-                strong_corrs.append((col1, col2, value))
+# quante immagini serviranno
+n_plots = math.ceil(n_vars / vars_per_plot)
 
-# ordina per valore assoluto della correlazione (dalla più forte)
-strong_corrs = sorted(strong_corrs, key=lambda x: abs(x[2]), reverse=True)
-
-# salva report in CSV
-report = pd.DataFrame(strong_corrs, columns=["Variabile 1", "Variabile 2", "Correlazione"])
-report.to_csv("strong_correlations_report.csv", index=False)
-
-print("Report salvato in 'strong_correlations_report.csv'")
-print(report)
+for i in range(n_plots):
+    start = i * vars_per_plot
+    end = min((i + 1) * vars_per_plot, n_vars)
+    subset_cols = cols[start:end]
+    
+    # sotto-matrice di correlazione
+    sub_matrix = cor_matrix.loc[subset_cols, subset_cols]
+    
+    # disegno
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(sub_matrix, annot=True, cmap="coolwarm", fmt=".2f", 
+                square=True, cbar=True)
+    
+    # salvo il PNG
+    filename = f"correlation_plot_part{i+1}.png"
+    plt.savefig(filename, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"Salvato {filename}")
