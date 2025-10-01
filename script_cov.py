@@ -1,17 +1,3 @@
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import math
-
-# leggi il CSV
-data = pd.read_csv("unico.csv")
-
-# seleziona solo variabili numeriche
-num_data = data.select_dtypes(include=['float64', 'int64'])
-
-# calcola la matrice di correlazione
-cor_matrix = num_data.corr()
-
 # quante variabili per immagine (puoi cambiare il numero)
 vars_per_plot = 10  
 
