@@ -38,18 +38,14 @@ Raw data is proprietary to Generali and excluded from this repository.
 
 ---
 
-## The team system (context)
+## The team effort (context)
 
-A hybrid recommender combining two signals:
-
-| Component | Method | Weight |
-|---|---|---|
-| Collaborative filtering | Coverage co-occurrence + cosine similarity | 60% |
-| Profile-based prediction | Random Forest classifier per coverage type | 40% |
-
-Blended at inference; profile-based fallback for cold-start customers.
-Team results: **45% hit rate**, NDCG 19%, 15/27 coverage types modeled. In the
-pitch the team projected ~855k annual upsells (~€10M revenue opportunity) for Genertel.
+A 6-hour hackathon. After the shared data foundation was in place, the team split
+into sub-teams that explored several modeling directions in parallel (collaborative
+filtering and per-coverage Random Forest, blended). Under the time box the work
+stayed exploratory and was never consolidated into a single pipeline — this repo
+deliberately scopes to my data-engineering and EDA contribution, which is the part
+I can fully stand behind.
 
 ---
 
@@ -63,7 +59,6 @@ generali_challenge/
 │   └── correlation_analysis.py   # Correlation heatmaps (chunked for readability)
 ├── notebooks/eda.ipynb           # Exploratory data analysis
 ├── plots/correlation/            # Pre-generated correlation heatmaps (4 parts)
-├── assets/er_db.jpg              # Database entity-relationship diagram
 ├── docs/                         # Team presentation (slides + speech)
 └── requirements.txt
 ```
