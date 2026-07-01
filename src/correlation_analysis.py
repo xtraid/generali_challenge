@@ -1,5 +1,14 @@
+import math
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# matrice di correlazione delle feature numeriche preparate a monte
+df = pd.read_csv("data/unico.csv")
+cor_matrix = df.corr(numeric_only=True)
+
 # quante variabili per immagine (puoi cambiare il numero)
-vars_per_plot = 10  
+vars_per_plot = 10
 
 # numero totale di variabili
 cols = cor_matrix.columns
