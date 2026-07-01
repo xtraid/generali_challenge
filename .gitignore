@@ -3,4 +3,5 @@ test/*
 *.png
 .venv
 !plots/correlation/*.png
-!plots/*.png.DS_Store
+!plots/*.png
+.DS_Store
